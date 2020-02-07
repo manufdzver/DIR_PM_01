@@ -1,0 +1,93 @@
+
+4.3 ARDUINO
+  http://www.arduino.cc/en/Tutorial/Blink
+
+	2. Duplicar Frecuencia de oscilaciòn.
+		==> Cambiar delay reduciendolo a la mitad.
+
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(500);                       // wait for a half a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(500);                       // wait for a half a second
+}
+
+
+	3. Usar sensor fotostatico para prender LED.
+
+ http://www.arduino.cc/en/Tutorial/AnalogInput
+
+
+int sensorPin = A0; // select the input pin for the potentiometer
+int ledPin = 13;      // select the pin for the LED
+float sensorValue = 0; // variable to store the value coming from the sensor
+
+void setup() {
+  // declare the ledPin as an OUTPUT:
+  pinMode(ledPin, OUTPUT);
+  // initialise serial port with baud rate of 9600
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read the value from the sensor:
+  sensorValue = analogRead(sensorPin);
+
+
+  if (sensorValue<25) {
+    // turn the ledPin on
+    digitalWrite(ledPin, HIGH);
+  } else {
+     // turn the ledPin off:
+    digitalWrite(ledPin, LOW);
+  }
+  
+}
+
+///////////////////////////////////////////////////////////////////////////
+	4. Sustituir valor preestablecido por potenciometro
+	5. Desplegar los valores de oscuridad y potenciometro usando Serial Monitor.
+
+int sensorPin = A0; // select the input pin for the potentiometer
+int potenPin = A2;
+int ledPin = 13;      // select the pin for the LED
+float sensorValue = 0; // variable to store the value coming from the sensor
+float potenValue = 0;
+
+void setup() {
+  // declare the ledPin as an OUTPUT:
+  pinMode(ledPin, OUTPUT);
+  // initialise serial port with baud rate of 9600
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read the value from the sensor:
+  sensorValue = analogRead(sensorPin);
+  potenValue = analogRead(potenPin);
+
+  if (sensorValue<potenValue) {
+    // turn the ledPin on
+    digitalWrite(ledPin, HIGH);
+  } else {
+     // turn the ledPin off:
+    digitalWrite(ledPin, LOW);
+  }
+  
+
+  //Print the darkness values measured by photoresistor/potenciometer
+  Serial.print("Valor Potenciometro: %");
+  Serial.print((potenValue/1023)*100);
+  Serial.println("   ");
+  Serial.print("Valor Sensor: %");
+  Serial.print((sensorValue/1023)*100);
+  Serial.println("   ");
+  delay(1000);
+}
